@@ -53,7 +53,7 @@ stage('Integration Tests on Staging'){
     post{
     success{ emailext (
                 attachLog: true, 
-                to: 'prajwalkantharaju@gmail.com',
+                to: 'bhaveshagg2028@gmail.com',
                 subject: 'Integration Tests status',
                 body: 'The Integration Tests has succeeded. Please check the logs for details.',
                 
@@ -61,7 +61,7 @@ stage('Integration Tests on Staging'){
      }
 failure{emailext (
                 attachLog: true, 
-                to: 'prajwalkantharaju@gmail.com',
+                to: 'bhaveshagg2028@gmail.com',
                 subject: 'Integration Tests status',
                 body: 'The Integration Tests has failed. Please check the logs for details.',
                 
@@ -77,7 +77,7 @@ post {
         success {
             emailext (
                 attachLog: true, 
-                to: 'prajwalkantharaju@gmail.com',
+                to: 'bhaveshagg2028@gmail.com',
                 subject: 'Pipeline succeeded',
                 body: 'The pipeline has succeeded. Please check the logs for details.',
                 
@@ -88,7 +88,7 @@ post {
             emailext (
                 subject: "Pipeline is Failed",
                 body: "The pipeline has failed. See attached logs.",
-                to: "prajwalkantharaju@gmail.com",
+                to: "bhaveshagg2028@gmail.com",
                 attachLog: true,
             )
         }
