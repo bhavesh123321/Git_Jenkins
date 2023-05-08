@@ -9,8 +9,7 @@ stages {
     
 stage('Unit and Integration Tests'){
     steps{
-        echo "running unit testing using selenium" 
-        echo " integration testing using selenium"
+        echo "running unit Integration testing using Informatica" 
     }
 }
 
@@ -22,7 +21,7 @@ stage('Code Analysis'){
 
 stage('Security Scan'){
     steps{
-        echo "performing a security scan on the code using a tool to identify any vulnerabilities using Acunetix"
+        echo "security scan on the code using ausing Nmap"
     }
     post{
     success{ emailext (
@@ -48,7 +47,7 @@ stage('Deploy to staging'){
 
 stage('Integration Tests on Staging'){
     steps{
-        echo "testing on staging environment using selenium"
+        echo "testing on staging using Informatica"
     }
     post{
     success{ emailext (
@@ -70,7 +69,7 @@ failure{emailext (
 
 stage('Deploy to Production'){
     steps{
-        echo "deploy the application to a production server AWS EC2 instance server"
+        echo "deploy to production server AWS EC2 instance server"
     }
 }}
 post {
