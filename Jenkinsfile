@@ -48,7 +48,7 @@ stage('Integration Tests on Staging'){
     steps{
         echo "testing on staging environment using selenium"
     }}
-}
+
 
 stage('Deploy to Production'){
     steps{
