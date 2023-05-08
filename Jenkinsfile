@@ -58,8 +58,7 @@ pipeline {
                 echo "deploy the application to a production server Azure instance server"
                 }
             }
-        }
-    }
+     
     
     post {
         
@@ -82,4 +81,5 @@ pipeline {
             )
         }
     }
+}
 }
