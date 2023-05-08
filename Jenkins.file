@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build') {
+            tools {
+                maven 'Maven'
+            }
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Unit and Integration Tests') {
+            tools {
+                maven 'Maven'
+            }
+            steps {
+                sh 'mvn test'
+                sh 'mvn integration-test'
+            }
+        }
+        stage('Code Analysis') {
+            tools {
+                jenkinsPlugin 'Checkstyle'
+            }
+            steps {
+                checkstyle pattern: 'src/main/**/*.java'
+            }
+        }
+        stage('Security Scan') {
+            tools {
+                jenkinsPlugin 'OWASP Dependency-Check Plugin'
+            }
+            steps {
+                dependencyCheck failBuildOnCVSS: '11'
+            }
+        }
+        stage('Deploy to Staging') {
+            tools {
+                jenkinsPlugin 'Deploy to Container Plugin'
+            }
+            steps {
+                deploy containerName: 'myapp-staging', credentialsId: 'aws-creds', deployType: 'tomcat', war: 'target/myapp.war'
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                sh 'curl -X POST https://myapp-staging.example.com/api/integration-tests'
+            }
+        }
+        stage('Deploy to Production') {
+            tools {
+                jenkinsPlugin 'AWS Elastic Beanstalk'
+            }
+            steps {
+                withAWS(credentials: 'aws-creds', region: 'us-east-1') {
+                    ebCreate(application: 'myapp', environment: 'production')
+                    ebDeploy(application: 'myapp', environment: 'production', versionLabel: '1.0.${BUILD_NUMBER}')
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            emailext body: "The build has finished. Status: ${currentBuild.currentResult}", subject: "Build Status: ${currentBuild.currentResult}", to: "developers@example.com"
+        }
+    }
+}
