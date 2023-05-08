@@ -25,7 +25,7 @@ stage('Security Scan'){
     post{
     success{ emailext (
                 attachLog: true, 
-                to: 'bhaveshagg2028@gmail.com',,
+                to: 'bhaveshagg2028@gmail.com',
                 subject: 'Security Scan status',
                 body: 'The Security Scan has succeeded',
                 
