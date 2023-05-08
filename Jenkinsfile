@@ -52,7 +52,7 @@ stage('Integration Tests on Staging'){
 
 stage('Deploy to Production'){
     steps{
-        echo "deploy to a staging server Azure server
+        echo "deploy to a staging server Azure server"
     }
 }
 
